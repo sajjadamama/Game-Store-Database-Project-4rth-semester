@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Game Store</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #2d2d2d;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+            header nav ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                header nav ul li {
+                    display: inline;
+                    margin: 0 15px;
+                }
+
+                    header nav ul li a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 18px;
+                    }
+
+                        header nav ul li a:hover {
+                            color: #ff6347;
+                        }
+
+        main {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #ff6347;
+            text-align: center;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .cart-item h2 {
+                font-size: 18px;
+            }
+
+            .cart-item p {
+                margin: 0;
+            }
+
+        .cart-total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .cart-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+            .cart-actions button {
+                padding: 10px 20px;
+                background-color: #ff6347;
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .cart-actions button:hover {
+                    background-color: #ff4500;
+                }
+
+        footer {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('game_page') }}">Games</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Your Shopping Cart</h1>
+
+        {% if cart_items %}
+        <div class="cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <h2>{{ item[0] }}</h2>
+                <p>Quantity: {{ item[1] }}</p>
+                <p>Price: ${{ item[1] * item[2] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-total">
+            <p>Total: ${{ total_amount }}</p>
+        </div>
+
+        <div class="cart-actions">
+            <form action="{{ url_for('checkout') }}" method="POST">
+                <button type="submit">Proceed to Checkout</button>
+            </form>
+        </div>
+
+        {% else %}
+        <p>Your cart is empty. Go back and add some games!</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Game Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

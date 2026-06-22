@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Game Store</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #2d2d2d;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+            header ul {
+                list-style-type: none;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+                header ul li {
+                    display: inline;
+                }
+
+                    header ul li a {
+                        color: white;
+                        text-decoration: none;
+                    }
+
+        main {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #ff6347;
+            text-align: center;
+        }
+
+        .flash-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-details {
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .payment-actions {
+            text-align: center;
+        }
+
+            .payment-actions button {
+                padding: 10px 20px;
+                background-color: #ff6347;
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .payment-actions button:hover {
+                    background-color: #ff4500;
+                }
+
+        footer {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('game_page') }}">Games</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Payment</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="{{ 'flash-message' if category == 'success' else 'error-message' }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="payment-details">
+            <p>
+                Total amount:
+                {% if total_price is not none %}
+                ${{ "%.2f"|format(total_price|float) }}
+                {% else %}
+                $0.00
+                {% endif %}
+            </p>
+        </div>
+
+        <form action="{{ url_for('payment') }}" method="POST">
+            <input type="hidden" name="order_id" value="{{ order_id }}">
+
+            <label for="method">Select Payment Method</label>
+            <select name="method" id="method" required>
+                <option value="">-- Select a method --</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="bank_transfer">Bank Transfer</option>
+            </select>
+
+            <div class="payment-actions">
+                <button type="submit">Confirm and Pay</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Game Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

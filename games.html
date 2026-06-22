@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Game Store</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #2d2d2d;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+            header nav ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                header nav ul li {
+                    display: inline;
+                    margin: 0 15px;
+                }
+
+                    header nav ul li a {
+                        color: white;
+                        text-decoration: none;
+                        font-size: 18px;
+                    }
+
+                        header nav ul li a:hover {
+                            color: #ff6347;
+                        }
+
+        main {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #ff6347;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .game-item {
+            width: 200px;
+            margin: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+            .game-item img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 5px;
+            }
+
+            .game-item h2 {
+                font-size: 18px;
+                margin-top: 10px;
+            }
+
+            .game-item p {
+                font-size: 16px;
+                color: #666;
+            }
+
+            .game-item button {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #ff6347;
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .game-item button:hover {
+                    background-color: #ff4500;
+                }
+
+        footer {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('game_page') }}">Games</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Available Games</h1>
+
+        <div class="game-list">
+            {% for game in games %}
+            <div class="game-item">
+                <img src="https://via.placeholder.com/200x300" alt="Game Image">
+                <h2>{{ game[1] }}</h2>
+                <p>{{ game[2] }}</p>
+                <p>Price: ${{ game[3] }}</p>
+                <p>Stock: {{ game[6] }}</p>
+                <form action="{{ url_for('game_details', game_id=game[0]) }}" method="GET">
+                    <button type="submit">View Details</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Game Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

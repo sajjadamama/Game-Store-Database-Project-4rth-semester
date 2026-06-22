@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alisha's Game Store - Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #2d2d2d;
+            color: white;
+            padding: 20px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+            nav a:hover {
+                color: #ff6347;
+            }
+
+        main {
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #ff6347;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #2d2d2d;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .alert {
+            margin: 20px auto;
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffe0e0;
+            color: #900;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <main>
+        <h1>Welcome to Alisha's Game Store</h1>
+        <p>
+            Hi! I'm Alisha, a Computer Science student graduating from FAST – National University of Computer and Emerging Sciences.
+        </p>
+        <p>
+            I have worked on several Data Structures projects including a Mini-Instagram and Contact Book.
+        </p>
+        <p>
+            I’ve also studied Object-Oriented Programming (OOP), and I’m passionate about coding and software development.
+        </p>
+        <p>
+            Feel free to explore the game store or get in touch with me!
+        </p>
+    </main>
+
+    <footer>
+        Contact: shaji261@gmail.com | Phone: 0317-6131580
+    </footer>
+
+</body>
+</html>
